@@ -1486,7 +1486,7 @@ def _eqn_vjp_fn(eqn: Optional[JaxprEqn],
     # Identity function
     return (cts_in,)
 
-  with ad.source_info_util.user_context(eqn.source_info):
+  with ad.source_info_util.user_context(eqn.source_info.traceback):
     if eqn.primitive.call_primitive or eqn.primitive.map_primitive:
       cts_in_avals = [v.aval for v in eqn.outvars]
       call_jaxpr, params = core.extract_call_jaxpr(eqn.primitive, eqn.params)

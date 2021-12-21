@@ -5,7 +5,8 @@ from typing import Callable, Optional, Tuple, Dict, List, Union
 import jax.numpy as np
 import jax
 from jax import lax
-from jax.interpreters import ad, xla
+from jax._src import dispatch
+from jax.interpreters import ad
 import numpy as onp
 from jax.interpreters.ad import UndefinedPrimal
 from jax.core import JaxprEqn, ShapedArray, Primitive, Jaxpr, Var, AbstractValue, Literal
@@ -899,8 +900,8 @@ AXES_RULES[lax.squeeze_p] = _squeeze_a
 JACOBIAN_RULES[lax.squeeze_p] = _eye_j
 
 
-AXES_RULES[xla.device_put_p] = _eye_a
-JACOBIAN_RULES[xla.device_put_p] = _eye_j
+AXES_RULES[dispatch.device_put_p] = _eye_a
+JACOBIAN_RULES[dispatch.device_put_p] = _eye_j
 
 
 AXES_RULES[lax.convert_element_type_p] = _eye_a
